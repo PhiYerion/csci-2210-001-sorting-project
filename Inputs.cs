@@ -16,7 +16,7 @@ public class Inputs
         return numbers;
     }
 
-    public static int[] partiallySortedNums(
+    public static int[] PartiallySortedNums(
             int amount = 1000,
             int chanceDivisor = 10,
             int min = Int32.MinValue,
@@ -26,7 +26,7 @@ public class Inputs
         Array.Sort(start);
 
         Random random = new Random();
-        foreach (int i in start)
+        for (int i = 0; i < amount; i++)
         {
             if (random.Next(0, chanceDivisor) == 0)
             {

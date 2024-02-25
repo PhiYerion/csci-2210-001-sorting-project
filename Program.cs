@@ -5,32 +5,16 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        int[] randomNumbers(int amount, int min, int max)
+        var results = Bench.AllAlgos();
+        foreach ((String testName, long ms) in results)
         {
-            Random random = new Random();
-            int[] numbers = new int[amount];
-            for (int i = 0; i < amount; i++)
-            {
-                numbers[i] = random.Next(min, max);
-            }
-            return numbers;
+            Console.WriteLine(testName + " took " + ms + "ms");
         }
 
-        int[] partiallySortedNums(int amount, int chanceDivisor, int min, int max)
+        Console.WriteLine("\n\n# For Export:\n");
+        foreach ((String testName, long ms) in results)
         {
-            var start = randomNumbers(amount, min, max);
-            Array.Sort(start);
-
-            Random random = new Random();
-            foreach (int i in start)
-            {
-                if (random.Next(0, chanceDivisor) == 0)
-                {
-                    start[i] = random.Next(min, max);
-                }
-            }
-
-            return start;
+            Console.WriteLine(testName + "," + ms);
         }
     }
 }
