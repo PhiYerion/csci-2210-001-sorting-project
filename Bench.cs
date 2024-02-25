@@ -24,4 +24,21 @@ public class Bench
 
         return timer.ElapsedMilliseconds;
     }
+
+    public List<(String, long)> AllAlgos(int iterations = 1000)
+    {
+        var results = new List<(String, long)>();
+
+        results.Add(("BubbleSort", BenchSortingAlgo(
+                        new BubbleSort(),
+                        () => Inputs.randomNumbers(),
+                        iterations)));
+
+        results.Add(("MergeSort", BenchSortingAlgo(
+                        new MergeSort(),
+                        () => Inputs.randomNumbers(),
+                        iterations)));
+
+        return results;
+    }
 }
