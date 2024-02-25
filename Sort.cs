@@ -1,13 +1,13 @@
 ﻿namespace sorting_algos;
 
-public interface ISort
+public interface ISort<T> where T : IComparable<T>
 {
-    public void Sort<T>(T[] arr) where T : IComparable<T>;
+    void Sort(T[] arr);
 }
 
-public class BubbleSort : ISort
+public class BubbleSort<T> : ISort<T> where T : IComparable<T>
 {
-    public void Sort<T>(T[] arr) where T : IComparable<T>
+    public void Sort(T[] arr)
     {
         for (int i = 0; i < arr.Length; i++)
         {
@@ -24,9 +24,9 @@ public class BubbleSort : ISort
     }
 }
 
-public class MergeSort : ISort
+public class MergeSort<T> : ISort<T> where T : IComparable<T>
 {
-    public void mergeArray<T>(T[] arr, T[] left, T[] right) where T : IComparable<T>
+    public void mergeArray(T[] arr, T[] left, T[] right)
     {
         int array_index = 0, left_index = 0, right_index = 0;
 
@@ -53,7 +53,7 @@ public class MergeSort : ISort
         }
     }
 
-    public void Sort<T>(T[] arr) where T : IComparable<T>
+    public void Sort(T[] arr)
     {
         if (arr.Length <= 1) return;
 

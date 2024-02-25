@@ -36,4 +36,36 @@ public class Inputs
 
         return start;
     }
+
+    public static Book[] randomBooks(int amount = 1000)
+    {
+        Random random = new Random();
+        var books = new Book[amount];
+        for (int i = 0; i < amount; i++)
+        {
+            books[i] = new Book(
+                    randomString(10),
+                    randomString(10),
+                    randomString(30),
+                    randomString(4, '0', '9') + "-" 
+                        + randomString(2, '0', '9') + "-" 
+                        + randomString(2, '0', '9')
+                    );
+        }
+        return books;
+    }
+
+    private static string randomString(int length, char start = 'A', char end = 'z')
+    {
+        Random random = new Random();
+        String str = "";
+
+        for (int i = 0; i < length; i++)
+        {
+            char c = (char)random.Next(start, end);
+            str += c;
+        }
+
+        return str;
+    }
 }

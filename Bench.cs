@@ -4,10 +4,11 @@ namespace sorting_algos;
 
 public class Bench
 {
-    public static long BenchSortingAlgo(
-            ISort sort,
-            Func<int[]> arrGen,
-            int iterations = 1000)
+    public static long BenchSortingAlgo<T>(
+            ISort<T> sort,
+            Func<T[]> arrGen,
+            int iterations = 1000
+        ) where T : IComparable<T>
     {
         // Warmup
         for (int i = 0; i < iterations / 3 + 10; i++)
@@ -25,7 +26,10 @@ public class Bench
         return timer.ElapsedMilliseconds;
     }
 
-    public static List<(String, long)> AllAlgos(int iterations = 100)
+    public static List<(String, long)> AllAlgos<T>(
+            Func<T[]> gen, 
+            int iterations = 100) 
+        where T : IComparable<T>
     {
         var results = new List<(String, long)>();
 
@@ -36,29 +40,29 @@ public class Bench
             Console.WriteLine("BubbleSort-Random" + endString);
             results.Add(("BubbleSort-Random" + endString,
                         BenchSortingAlgo(
-                            new BubbleSort(),
-                            () => Inputs.randomNumbers(amount),
+                            new BubbleSort<T>(),
+                            gen,
                             iterations)));
 
             Console.WriteLine("MergeSort-Random" + endString);
             results.Add(("MergeSort-Random" + endString,
                         BenchSortingAlgo(
-                            new MergeSort(),
-                            () => Inputs.randomNumbers(amount),
+                            new MergeSort<T>(),
+                            gen,
                             iterations)));
 
             Console.WriteLine("BubbleSort-SemiSorted" + endString);
             results.Add(("BubbleSort-SemiSorted" + endString,
                         BenchSortingAlgo(
-                            new BubbleSort(),
-                            () => Inputs.PartiallySortedNums(amount),
+                            new BubbleSort<T>(),
+                            gen,
                             iterations)));
 
             Console.WriteLine("MergeSort-SemiSorted" + endString);
             results.Add(("MergeSort-SemiSorted" + endString,
                         BenchSortingAlgo(
-                            new MergeSort(),
-                            () => Inputs.PartiallySortedNums(),
+                            new MergeSort<T>(),
+                            gen,
                             iterations)));
         }
 
