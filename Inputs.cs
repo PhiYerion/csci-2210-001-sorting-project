@@ -2,7 +2,7 @@
 
 public class Inputs
 {
-    public int[] randomNumbers(
+    public static int[] randomNumbers(
             int amount = 1000,
             int min = Int32.MinValue,
             int max = Int32.MaxValue)
@@ -16,7 +16,7 @@ public class Inputs
         return numbers;
     }
 
-    public int[] partiallySortedNums(
+    public static int[] partiallySortedNums(
             int amount = 1000,
             int chanceDivisor = 10,
             int min = Int32.MinValue,
