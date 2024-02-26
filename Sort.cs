@@ -7,6 +7,8 @@ public interface ISort<T> where T : IComparable<T>
 
 public class BubbleSort<T> : ISort<T> where T : IComparable<T>
 {
+    /// <summary>Sorts the array using the Bubble Sort algorithm</summary>
+    /// <param name="arr">The array to be sorted</param>
     public void Sort(T[] arr)
     {
         for (int i = 0; i < arr.Length; i++)
@@ -26,6 +28,10 @@ public class BubbleSort<T> : ISort<T> where T : IComparable<T>
 
 public class MergeSort<T> : ISort<T> where T : IComparable<T>
 {
+    /// <summary>Merges the left and right arrays into the arr array</summary>
+    /// <param name="arr">The array to merge into</param>
+    /// <param name="left">The left array</param>
+    /// <param name="right">The right array</param>
     public void mergeArray(T[] arr, T[] left, T[] right)
     {
         int array_index = 0, left_index = 0, right_index = 0;
@@ -53,6 +59,8 @@ public class MergeSort<T> : ISort<T> where T : IComparable<T>
         }
     }
 
+    /// <summary>Sorts the array using the Merge Sort algorithm</summary>
+    /// <param name="arr">The array to be sorted</param>
     public void Sort(T[] arr)
     {
         if (arr.Length <= 1) return;
