@@ -7,9 +7,9 @@ internal class Program
     /// Sort and prints the results</summary>
     ///
     /// <param name="gen">The lambda that generates the array to be sorted</param>
-    private static void bench<T>(Func<int, T[]> gen) where T : IComparable<T>
+    private static void bench<T>(Func<int, T[]> gen, string name = "") where T : IComparable<T>
     {
-        var numResults = Bench.AllAlgos(gen);
+        var numResults = Bench.AllAlgos(gen, name, 20);
         foreach ((String testName, long ms) in numResults)
         {
             Console.WriteLine(testName + " took " + ms + "ms");
@@ -24,14 +24,12 @@ internal class Program
 
     private static void Main(string[] args)
     {
-        Console.WriteLine("\n\n\nRandom Numbers:");
         Thread t1 = new Thread(() => bench((int amount) => Inputs.RandomNumbers(amount)));
         t1.Start();
-        Console.WriteLine("\n\n\nSemi-Sorted Numbers:");
+
         Thread t2 = new Thread(() => bench((int amount) => Inputs.PartiallySortedNums(amount)));
         t2.Start();
 
-        Console.WriteLine("\n\n\nBooks:");
         Thread t3 = new Thread(() => bench((int amount) => Inputs.RandomBooks(amount)));
         t3.Start();
 
