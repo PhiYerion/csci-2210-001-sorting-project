@@ -53,6 +53,7 @@ public class Bench
                     iterations);
                 Console.WriteLine("BubbleSort" + endString + "," + result);
             });
+            t1.Start();
 
             Thread t2 = new Thread(() =>
             {
@@ -62,6 +63,10 @@ public class Bench
                     iterations);
                 Console.WriteLine("MergeSort" + endString + "," + result);
             });
+            t2.Start();
+
+            t1.Join();
+            t2.Join();
         }
 
         return results;

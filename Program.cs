@@ -9,19 +9,7 @@ internal class Program
     /// <param name="gen">The lambda that generates the array to be sorted</param>
     private static void bench<T>(Func<int, T[]> gen, string name = "") where T : IComparable<T>
     {
-        var numResults = Bench.AllAlgos(gen, name, 20);
-
-        Console.WriteLine("\n\n# Results for " + name + ":\n");
-        foreach ((String testName, long ms) in numResults)
-        {
-            Console.WriteLine(testName + " took " + ms + "ms");
-        }
-
-        Console.WriteLine("\n\n# For Export:\n");
-        foreach ((String testName, long ms) in numResults)
-        {
-            Console.WriteLine(testName + "," + ms);
-        }
+        Bench.AllAlgos(gen, name, 20);
     }
 
     private static void Main(string[] args)
