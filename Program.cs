@@ -10,6 +10,8 @@ internal class Program
     private static void bench<T>(Func<int, T[]> gen, string name = "") where T : IComparable<T>
     {
         var numResults = Bench.AllAlgos(gen, name, 20);
+
+        Console.WriteLine("\n\n# Results for " + name + ":\n");
         foreach ((String testName, long ms) in numResults)
         {
             Console.WriteLine(testName + " took " + ms + "ms");
@@ -24,13 +26,13 @@ internal class Program
 
     private static void Main(string[] args)
     {
-        Thread t1 = new Thread(() => bench((int amount) => Inputs.RandomNumbers(amount)));
+        Thread t1 = new Thread(() => bench((int amount) => Inputs.RandomNumbers(amount), "RandomNums"));
         t1.Start();
 
-        Thread t2 = new Thread(() => bench((int amount) => Inputs.PartiallySortedNums(amount)));
+        Thread t2 = new Thread(() => bench((int amount) => Inputs.PartiallySortedNums(amount), "PartiallySortedNums"));
         t2.Start();
 
-        Thread t3 = new Thread(() => bench((int amount) => Inputs.RandomBooks(amount)));
+        Thread t3 = new Thread(() => bench((int amount) => Inputs.RandomBooks(amount), "RandomBooks"));
         t3.Start();
 
         t1.Join();

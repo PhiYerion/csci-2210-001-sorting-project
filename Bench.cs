@@ -45,7 +45,7 @@ public class Bench
         {
             var endString = "-" + name + "-" + typeof(T) + "-" + amount + "-" + iterations;
 
-            results.Add(("BubbleSort-Random-" + endString,
+            results.Add(("BubbleSort-Random" + endString,
                         BenchSortingAlgo(
                             new BubbleSort<T>(),
                             () => gen(amount),
