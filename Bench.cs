@@ -45,17 +45,23 @@ public class Bench
         {
             var endString = "-" + name + "-" + typeof(T) + "-" + amount + "-" + iterations;
 
-            results.Add(("BubbleSort-Random" + endString,
-                        BenchSortingAlgo(
-                            new BubbleSort<T>(),
-                            () => gen(amount),
-                            iterations)));
+            Thread t1 = new Thread(() =>
+            {
+                long result = BenchSortingAlgo(
+                    new BubbleSort<T>(),
+                    () => gen(amount),
+                    iterations);
+                Console.WriteLine("BubbleSort" + endString + "," + result);
+            });
 
-            results.Add(("MergeSort-Random" + endString,
-                        BenchSortingAlgo(
-                            new MergeSort<T>(),
-                            () => gen(amount),
-                            iterations)));
+            Thread t2 = new Thread(() =>
+            {
+                long result = BenchSortingAlgo(
+                    new MergeSort<T>(),
+                    () => gen(amount),
+                    iterations);
+                Console.WriteLine("MergeSort" + endString + "," + result);
+            });
         }
 
         return results;
