@@ -4,6 +4,10 @@ public abstract class RandomGenerator<T> where T : IComparable<T>
 {
     public abstract T Random(Random rng);
 
+    /// <summary> Generate a list of random numbers </summary>
+    /// <param name="amt"> The amount of random numbers to generate </param>
+    /// <param name="rng"> The random number generator </param>
+    /// <returns> A list of random numbers </returns>
     public T[] RandomList(long amt, Random rng)
     {
         T[] vals = new T[amt];
@@ -12,6 +16,10 @@ public abstract class RandomGenerator<T> where T : IComparable<T>
         return vals;
     }
 
+    /// <summary> Generate a list of random numbers that are partially sorted </summary>
+    /// <param name="amt"> The amount of random numbers to generate </param>
+    /// <param name="rng"> The random number generator </param>
+    /// <returns> A list of partially sorted random numbers </returns>
     public T[] PartiallySorted(long amt, Random rng)
     {
         T[] numbers = RandomList(amt, rng);
@@ -47,6 +55,9 @@ public class RandomBooks : RandomGenerator<Book>
             );
     }
 
+    /// <summary> Generate a random string </summary>
+    /// <param name="length"> The length of the string </param>
+    /// <param name="rng"> The random number generator </param>
     private static string randomString(int length, Random rng, char start = 'A', char end = 'z')
     {
         Random random = new Random();

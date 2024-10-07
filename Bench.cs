@@ -31,6 +31,11 @@ public class BenchResult : IFormattable
 
 public class Bench
 {
+    /// <summary> Bench a certain sorting algorithm </summary>
+    /// <param name="sort"> The sorting algorithm to bench </param>
+    /// <param name="gen"> The generator class for the type T </param>
+    /// <param name="iterations"> The amount of iterations to run the sorting
+    /// algorithm </param>
     public static BenchResult[] BenchSortingAlgo<T>(
             ISort<T> sort,
             RandomGenerator<T> gen,
@@ -66,6 +71,10 @@ public class Bench
         return new BenchResult[] { randomResult, semiSortedResult };
     }
 
+    /// <summary> Bench all sorting algorithms </summary>
+    /// <param name="gen"> The generator class for the type T </param>
+    /// <param name="iterations"> The amount of iterations to run the sorting
+    /// algorithm </param>
     public static IEnumerable<BenchResult> AllAlgos<T>(
             RandomGenerator<T> gen,
             int iterations = 100)

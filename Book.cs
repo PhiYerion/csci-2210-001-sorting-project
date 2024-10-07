@@ -17,6 +17,9 @@ public class Book : IComparable<Book>
         ReleaseDate = releaseDate;
     }
 
+    /// <summary>Parses following the format "&lt;title&gt; by &lt;first
+    /// name&gt; &lt;last name&gt; on &lt;date&gt;. This does not check for a
+    /// properly formatted string"</summary>
     public static Book Parse(String str)
     {
         string title_pattern = "^.* by ";
@@ -24,19 +27,25 @@ public class Book : IComparable<Book>
         string date_pattern = " on .*";
 
         string title = Regex.Match(str, title_pattern).Value;
-        title = title.Remove(title.Length - 4); // Remove " by "
+        // Remove " by "
+        title = title.Remove(title.Length - 4);
 
         string author = Regex.Match(str, author_pattern).Value;
-        author = author.Remove(0, 4); // Remove " by "
+        // Remove " by "
+        author = author.Remove(0, 4);
         var names = author.Split(" ");
         (string first, string last) = (names[0], names[1]);
 
         string date = Regex.Match(str, date_pattern).Value;
-        date = date.Remove(0, 4); // Remove "on "
+        // Remove " on "
+        date = date.Remove(0, 4);
 
         return new Book(last, first, title, date);
     }
 
+    /// <summary>Parses following the format "&lt;title&gt; by &lt;first
+    /// name&gt; &lt;last name&gt; on &lt;date&gt;. If the string is not
+    /// properly formatted, null will be returned</summary>
     public static Book? TryParse(String str)
     {
         string title_pattern = "^.* by ";
@@ -49,14 +58,17 @@ public class Book : IComparable<Book>
         if (!titleResult.Success) return null;
 
         string title = titleResult.Value;
-        title = title.Remove(title.Length - 4); // Remove " by "
+        // Remove " by "
+        title = title.Remove(title.Length - 4);
 
         // Author
         var authorResult = Regex.Match(str, author_pattern);
         if (!authorResult.Success) return null;
 
         string author = authorResult.Value;
-        author = author.Remove(0, 4); // Remove " by "
+        // Remove " by "
+        author = author.Remove(0, 4);
+        // Split first and last name
         var names = author.Split(" ");
         (string first, string last) = (names[0], names[1]);
 
@@ -64,7 +76,8 @@ public class Book : IComparable<Book>
         var dateResult = Regex.Match(str, date_pattern);
         if (!dateResult.Success) return null;
         string date = dateResult.Value;
-        date = date.Remove(0, 4); // Remove "on "
+        // Remove " on "
+        date = date.Remove(0, 4);
 
         return new Book(last, first, title, date);
 

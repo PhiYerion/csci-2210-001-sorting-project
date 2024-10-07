@@ -3,6 +3,11 @@ using sorting_algos;
 
 internal class Program
 {
+    /// <summary>Benchmarks the array from 'gen' using Bubble Sort and Merge
+    /// Sort and prints the results</summary>
+    ///
+    /// <param name="gen">The lambda that generates the array to be sorted</param>
+    /// <param name="export">Whether to export the results to a CSV file</param>
     private static void oneRun<T>(RandomGenerator<T> gen, bool export = false) where T : IComparable<T>
     {
         if (export)
