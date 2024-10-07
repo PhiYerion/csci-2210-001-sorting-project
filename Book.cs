@@ -2,6 +2,10 @@
 
 namespace sorting_algos;
 
+/// <summary>Represents a book with a last name, first name, title, and
+/// release date. This class is comparable and can be parsed from a string
+/// with the format "&lt;title&gt; by &lt;first name&gt; &lt;last name&gt;
+/// on &lt;date&gt;"</summary>
 public class Book : IComparable<Book>
 {
     public String LastName;
