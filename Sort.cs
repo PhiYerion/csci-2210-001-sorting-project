@@ -1,11 +1,32 @@
 ﻿namespace sorting_algos;
 
+public class AlgoTypes
+{
+    public enum Enum { BubbleSort, MergeSort }
+    public static IEnumerable<ISort<T>> Iter<T>() where T : IComparable<T>
+    {
+        foreach (Enum type in System.Enum.GetValues(typeof(Enum)))
+        {
+            switch (type)
+            {
+                case Enum.BubbleSort:
+                    yield return new BubbleSort<T>();
+                    break;
+                case Enum.MergeSort:
+                    yield return new MergeSort<T>();
+                    break;
+            }
+        }
+    }
+}
+
 public interface ISort<T> where T : IComparable<T>
 {
     void Sort(T[] arr);
+    AlgoTypes.Enum Type { get; }
 }
 
-public class BubbleSort<T> : ISort<T> where T : IComparable<T>
+public class BubbleSort<T> : IFormattable, ISort<T> where T : IComparable<T>
 {
     public void Sort(T[] arr)
     {
@@ -22,9 +43,19 @@ public class BubbleSort<T> : ISort<T> where T : IComparable<T>
             }
         }
     }
+
+    public string ToString(string? format, IFormatProvider? formatProvider)
+    {
+        return "BubbleSort";
+    }
+
+    public AlgoTypes.Enum Type
+    {
+        get { return AlgoTypes.Enum.BubbleSort; }
+    }
 }
 
-public class MergeSort<T> : ISort<T> where T : IComparable<T>
+public class MergeSort<T> : IFormattable, ISort<T> where T : IComparable<T>
 {
     public void mergeArray(T[] arr, T[] left, T[] right)
     {
@@ -67,5 +98,15 @@ public class MergeSort<T> : ISort<T> where T : IComparable<T>
         Sort(right);
 
         mergeArray(arr, left, right);
+    }
+
+    public string ToString(string? format, IFormatProvider? formatProvider)
+    {
+        return "MergeSort";
+    }
+
+    public AlgoTypes.Enum Type
+    {
+        get { return AlgoTypes.Enum.MergeSort; }
     }
 }

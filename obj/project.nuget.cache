@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "79bVD5EntnofVSzuI6Pnvywu4e0TlTG/7Ffr6pZ2927y7BAH6J48Av8hSBm/Ts0rtypgK3QNOnMWQnL6lt9F1g==",
+  "success": true,
+  "projectFilePath": "/home/user/school/datastructures/sorting_algos/sorting_algos.csproj",
+  "expectedPackageFiles": [
+    "/home/user/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.8/microsoft.aspnetcore.app.ref.8.0.8.nupkg.sha512"
+  ],
+  "logs": []
+}

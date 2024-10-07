@@ -1,61 +1,53 @@
 ﻿namespace sorting_algos;
 
-public class Inputs
+public abstract class RandomGenerator<T> where T : IComparable<T>
 {
-    public static int[] randomNumbers(
-            int amount = 1000,
-            int min = Int32.MinValue,
-            int max = Int32.MaxValue)
+    public abstract T Random(Random rng);
+
+    public T[] RandomList(long amt, Random rng)
     {
-        Random random = new Random();
-        int[] numbers = new int[amount];
-        for (int i = 0; i < amount; i++)
-        {
-            numbers[i] = random.Next(min, max);
-        }
+        T[] vals = new T[amt];
+        for (int i = 0; i < vals.Length; i++)
+            vals[i] = Random(rng);
+        return vals;
+    }
+
+    public T[] PartiallySorted(long amt, Random rng)
+    {
+        T[] numbers = RandomList(amt, rng);
+        Array.Sort(numbers);
+
+        for (int i = 0; i < numbers.Length; i++)
+            if (rng.Next(0, 10) == 0)
+                numbers[i] = Random(rng);
+
         return numbers;
     }
+}
 
-    public static int[] PartiallySortedNums(
-            int amount = 1000,
-            int chanceDivisor = 10,
-            int min = Int32.MinValue,
-            int max = Int32.MaxValue)
+public class RandomNumbers : RandomGenerator<int>
+{
+    public override int Random(Random rng)
     {
-        var start = randomNumbers(amount, min, max);
-        Array.Sort(start);
+        return rng.Next(int.MinValue, int.MaxValue);
+    }
+}
 
-        Random random = new Random();
-        for (int i = 0; i < amount; i++)
-        {
-            if (random.Next(0, chanceDivisor) == 0)
-            {
-                start[i] = random.Next(min, max);
-            }
-        }
-
-        return start;
+public class RandomBooks : RandomGenerator<Book>
+{
+    public override Book Random(Random rng)
+    {
+        return new Book(
+            randomString(10, rng),
+            randomString(10, rng),
+            randomString(30, rng),
+            randomString(4, rng, '0', '9') + "-"
+                + randomString(2, rng, '0', '9') + "-"
+                + randomString(2, rng, '0', '9')
+            );
     }
 
-    public static Book[] randomBooks(int amount = 1000)
-    {
-        Random random = new Random();
-        var books = new Book[amount];
-        for (int i = 0; i < amount; i++)
-        {
-            books[i] = new Book(
-                    randomString(10),
-                    randomString(10),
-                    randomString(30),
-                    randomString(4, '0', '9') + "-" 
-                        + randomString(2, '0', '9') + "-" 
-                        + randomString(2, '0', '9')
-                    );
-        }
-        return books;
-    }
-
-    private static string randomString(int length, char start = 'A', char end = 'z')
+    private static string randomString(int length, Random rng, char start = 'A', char end = 'z')
     {
         Random random = new Random();
         String str = "";

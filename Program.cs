@@ -3,26 +3,27 @@ using sorting_algos;
 
 internal class Program
 {
-    private static void oneRun<T>(Func<T[]> gen) where T : IComparable<T>
+    private static void oneRun<T>(RandomGenerator<T> gen, bool export = false) where T : IComparable<T>
     {
-        var numResults = Bench.AllAlgos(gen);
-        foreach ((String testName, long ms) in numResults)
-        {
-            Console.WriteLine(testName + " took " + ms + "ms");
-        }
+        if (export)
+            Console.WriteLine("algo,initialSort,iterations,ms");
 
-        Console.WriteLine("\n\n# For Export:\n");
-        foreach ((String testName, long ms) in numResults)
-        {
-            Console.WriteLine(testName + "," + ms);
-        }
+        var numResults = Bench.AllAlgos(gen);
+        foreach (BenchResult bench in numResults)
+            if (export)
+                Console.WriteLine(bench.algo.ToString() + ',' + bench.initialSort + ',' + bench.iterations + ',' + bench.ms);
+            else
+                Console.WriteLine(bench);
     }
 
     private static void Main(string[] args)
     {
-        Console.WriteLine("\n\n\nNumbers:");
-        oneRun(() => Inputs.randomNumbers());
-        Console.Write("\n\n\nBooks:");
-        oneRun(() => Inputs.randomBooks());
+        bool export = args.Length > 0 && args[0] == "export";
+
+        if (!export) Console.WriteLine("\n\n\nNumbers:");
+        oneRun(new RandomNumbers(), export);
+
+        if (!export) Console.Write("\n\n\nBooks:\n");
+        oneRun(new RandomBooks(), export);
     }
 }

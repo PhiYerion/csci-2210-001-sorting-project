@@ -2,70 +2,83 @@
 
 namespace sorting_algos;
 
+public class BenchResult : IFormattable
+{
+    public AlgoTypes.Enum algo;
+    public SortType initialSort;
+    public int iterations;
+    public long ms;
+
+    public enum SortType
+    {
+        Random,
+        SemiSorted
+    }
+
+    public BenchResult(AlgoTypes.Enum algo, SortType initialSort, int iterations, long ms)
+    {
+        this.algo = algo;
+        this.initialSort = initialSort;
+        this.iterations = iterations;
+        this.ms = ms;
+    }
+
+    public string ToString(string? format, IFormatProvider? formatProvider)
+    {
+        return algo + "-" + initialSort + "-" + iterations + " took " + ms + "ms";
+    }
+}
+
 public class Bench
 {
-    public static long BenchSortingAlgo<T>(
+    public static BenchResult[] BenchSortingAlgo<T>(
             ISort<T> sort,
-            Func<T[]> arrGen,
-            int iterations = 1000
+            RandomGenerator<T> gen,
+            int iterations = 1000,
+            int amt = 1000
         ) where T : IComparable<T>
     {
+        var rng = new Random();
         // Warmup
         for (int i = 0; i < iterations / 3 + 10; i++)
-        {
-            sort.Sort(arrGen());
-        }
+            sort.Sort(gen.RandomList(amt, rng));
 
         var timer = Stopwatch.StartNew();
         for (int i = 0; i < iterations; i++)
-        {
-            sort.Sort(arrGen());
-        }
+            sort.Sort(gen.RandomList(amt, rng));
         timer.Stop();
+        var randomResult = new BenchResult(
+            sort.Type,
+            BenchResult.SortType.Random,
+            amt,
+            timer.ElapsedMilliseconds);
 
-        return timer.ElapsedMilliseconds;
+        timer.Restart();
+        for (int i = 0; i < iterations; i++)
+            sort.Sort(gen.PartiallySorted(amt, rng));
+        timer.Stop();
+        var semiSortedResult = new BenchResult(
+            sort.Type,
+            BenchResult.SortType.SemiSorted,
+            amt,
+            timer.ElapsedMilliseconds);
+
+        return new BenchResult[] { randomResult, semiSortedResult };
     }
 
-    public static List<(String, long)> AllAlgos<T>(
-            Func<T[]> gen, 
-            int iterations = 100) 
+    public static IEnumerable<BenchResult> AllAlgos<T>(
+            RandomGenerator<T> gen,
+            int iterations = 100)
         where T : IComparable<T>
     {
-        var results = new List<(String, long)>();
-
-        foreach (int amount in new int[] { 10, 100, 1000, 10000 })
+        foreach (int amt in new int[] { 10, 100, 1000, 10000 })
         {
-            var endString = "-" + amount + "-" + iterations;
-
-            Console.WriteLine("BubbleSort-Random" + endString);
-            results.Add(("BubbleSort-Random" + endString,
-                        BenchSortingAlgo(
-                            new BubbleSort<T>(),
-                            gen,
-                            iterations)));
-
-            Console.WriteLine("MergeSort-Random" + endString);
-            results.Add(("MergeSort-Random" + endString,
-                        BenchSortingAlgo(
-                            new MergeSort<T>(),
-                            gen,
-                            iterations)));
-
-            Console.WriteLine("BubbleSort-SemiSorted" + endString);
-            results.Add(("BubbleSort-SemiSorted" + endString,
-                        BenchSortingAlgo(
-                            new BubbleSort<T>(),
-                            gen,
-                            iterations)));
-
-            Console.WriteLine("MergeSort-SemiSorted" + endString);
-            results.Add(("MergeSort-SemiSorted" + endString,
-                        BenchSortingAlgo(
-                            new MergeSort<T>(),
-                            gen,
-                            iterations)));
+            foreach (var algo in AlgoTypes.Iter<T>())
+            {
+                var results = BenchSortingAlgo(algo, gen, iterations, amt);
+                foreach (var result in results)
+                    yield return result;
+            }
         }
-
-        return results;
     }
 }

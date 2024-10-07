@@ -1,0 +1,15 @@
+/home/user/school/datastructures/sorting_algos/bin/Debug/net8.0/sorting_algos
+/home/user/school/datastructures/sorting_algos/bin/Debug/net8.0/sorting_algos.deps.json
+/home/user/school/datastructures/sorting_algos/bin/Debug/net8.0/sorting_algos.runtimeconfig.json
+/home/user/school/datastructures/sorting_algos/bin/Debug/net8.0/sorting_algos.dll
+/home/user/school/datastructures/sorting_algos/bin/Debug/net8.0/sorting_algos.pdb
+/home/user/school/datastructures/sorting_algos/obj/Debug/net8.0/sorting_algos.GeneratedMSBuildEditorConfig.editorconfig
+/home/user/school/datastructures/sorting_algos/obj/Debug/net8.0/sorting_algos.AssemblyInfoInputs.cache
+/home/user/school/datastructures/sorting_algos/obj/Debug/net8.0/sorting_algos.AssemblyInfo.cs
+/home/user/school/datastructures/sorting_algos/obj/Debug/net8.0/sorting_algos.csproj.CoreCompileInputs.cache
+/home/user/school/datastructures/sorting_algos/obj/Debug/net8.0/sorting_algos.dll
+/home/user/school/datastructures/sorting_algos/obj/Debug/net8.0/refint/sorting_algos.dll
+/home/user/school/datastructures/sorting_algos/obj/Debug/net8.0/sorting_algos.pdb
+/home/user/school/datastructures/sorting_algos/obj/Debug/net8.0/sorting_algos.genruntimeconfig.cache
+/home/user/school/datastructures/sorting_algos/obj/Debug/net8.0/ref/sorting_algos.dll
+/home/user/school/datastructures/sorting_algos/obj/Debug/net8.0/sorting_algos.sourcelink.json
